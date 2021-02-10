@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta name="descrition" content="Réseau social entreprise.">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="index,follow"/>
+
+        <title>Groupomania</title >
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="inscription.css">
+        
+        
+        
+    </head >
+
+
+  <body >
+        <div class="container-fluid">
+            <div class="row">
+                <header>
+                    <div class="banniere"><img src="icon-above-font.png" alt="logo Groupomania"></div>
+                    <h1>Réseau social interne Groupomania</h1>
+                    <h2><a class="nav-link" href="index.html">Accueil</a></h2>
+                </header>
+            </div>
+
+        <section>
+
+        
+        <form formgroup="signupForm">
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot passe</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Confirmation mot passe</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+          </div>
+
+          <div class="form-group">
+            <label for="pseudo">Pseudo</label>
+            <input type="pseudo" class="form-control" id="pseudo" formControlName="pseudo">
+          </div>
+
+          <div class="form-group">
+            <label for="poste">Poste dans l'entreprise</label>
+            <input type="poste" class="form-control" id="poste" formControlName="poste">
+          </div>
+
+          <div class="form-group">
+            <label for="lieux">Lieux</label>
+            <input type="lieux" class="form-control" id="lieux" formControlName="lieux">
+          </div>
+
+         <div class="crée"><button mat-raised-button color="primary" [disabled]="signupForm.invalid" (click)="onSignup()"><a href="blog.html">Crée</a></button></div>
+        
+
+        </form>
+
+      </section>
+        <footer>Condition Légale</footer>
+
+        <script src="ajax.js"></script>
+        <script src="inscription.js"></script>
+  </body >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,21 +1,34 @@
 // APPLICATION EXPRESS
 
 // importation du framework express et des package body-parser, mongoose path et helmet
+const http = require('http');
+const path= require('path');
 const express=require('express');
 const bodyParser=require('body-parser');
 
-// importation des routeurs 
-
-//const postsRoutes = require('./routes/....');
 const userRoutes = require('./routes/user.js');
-const postRoutes= require('./routes/post.js');
+const postRoutes = require('./routes/post.js');
 
-const path= require('path');
-
-// création de l'application express
+// récupération du module node-mysql
+const mysql = require('mysql');
+//création de l'application express
 const app=express();
+const server = http.Server(app);
+const io = require('socket.io')(server);
+
+const Sequelize = require('sequelize');
+
+// récupération des fonctions du fichier sql.js
+const sql = require('./serveur/sql.js');
+
+const routes = require('./serveur/routes.js');
+const socket = require('./serveur/socket.js');
 
 
+routes.f(app, __dirname, mysql, sql);
+socket.f(io, mysql, sql);
+
+server.listen(8888);
 // ajout de headers pour toutes les requêtes afin d'autoriser n'importe quel utilisateur à accéder à l'application
 //résolution erreurs cors
 app.use((req, res, next) => {
@@ -34,9 +47,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // gestion de la ressource images de manière statique
 app.use('/images', express.static(path.join( __dirname, 'images')));
 
-// enregistrement des routeurs sauce et utilisateur pour n'importe quelle requête effectuée vers /api/sauces et /api/auth
-app.use('/api/posts', postRoutes);
-app.use('/api/user', userRoutes);
+// enregistrement des routeurs post et utilisateur pour n'importe quelle requête effectuée vers /api/posts et /api/user
+app.use('/api/post',postRoutes);
+app.use('/api/user',userRoutes);
 
-
+// établissement de la connexion
+io.on('connection', (socket) =>{
+   console.log(`Connecté au client ${socket.id}`)
+})
 module.exports = app;

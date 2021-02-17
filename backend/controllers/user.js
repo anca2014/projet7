@@ -1,7 +1,6 @@
 // CONTROLLER UTILISATEUR - contient la logique métier des routes utilisateur
 
-// importation des packages bcrypt, jwt, email-validator, password-validator et mongo
-
+// importation des packages bcrypt, jwt, 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mysql = require ('mysql');
@@ -9,22 +8,58 @@ const models=require('../models');
 const utils=require('../utils/jwtUtils');
 const verifInput=require('../utils/verifInput');
   
-/*importation du modèle utilisateur
-const User = require ('UserModels');*/
+/*importation du modèle utilisateur*/
+//const User =require('../models/User');
 
-// exportation de la fonction qui va enregistrer un nouvel utilisateur
-exports.signup =(req,res,next) => {
-bcrypt.hash(req.body.password, 10)
-.then(hash =>{
-	const user = new User({
-		email: req.body.email,
-		password: hash
-	});
-	user.save()
-	.then(()=> res.stutus(201).json({ message:'Utilisateur crée'}))
-	.catch(error => res.status(400).json({error}));
-})
-.catch(error => res.status(500).json({error})); 
+//Création d'un user
+exports.signup = (req, res) => {
+    // Valider les paramètres de la requète
+    let email = req.body.email;
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if (email == null || username == null || password == null) {
+        res.status(400).json({ error: 'il manque un paramètre' })
+    }
+
+    //TO DO => Vérification des saisies user
+    let emailOk = verifInput.validEmail(email);
+    console.log(emailOk)
+    let mdpOK = verifInput.validPassword(password);
+    console.log(mdpOK)
+    let usernameOk = verifInput.validUsername(username);
+    console.log(usernameOk)
+    if (emailOk == true && mdpOK == true && usernameOk == true) {
+        //Vérification si user n'existe pas déjà
+        //TO DO => Vérifier l'username et l'email
+        models.User.findOne({
+            attributes: ['email'],
+            where: { email: email }
+        })
+            .then(user => {
+                if (!user) {
+                    bcrypt.hash(password, 10, function (err, bcryptPassword) {
+                        // Création de l'user
+                        const newUser = models.User.create({
+                            email: email,
+                            username: username,
+                            password: bcryptPassword,
+                            isAdmin: false
+                        })
+                            .then(newUser => { res.status(201).json({ 'id': newUser.id }) })
+                            .catch(err => {
+                                res.status(500).json({ err })
+                            })
+                    })
+                }
+                else {
+                    res.status(409).json({ error: 'Cette utilisateur existe déjà ' })
+                }
+            })
+            //.catch(err => { res.status(500).json({ err }) })
+    } else {
+        console.log('pas cette fois')
+    }
 };
 
 // exportation de la fonction qui va connecter un utilisateur déjà enregistré

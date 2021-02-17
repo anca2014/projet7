@@ -1,8 +1,49 @@
 // MODELE D'UTILISATEUR
 
 const mysql = require ('mysql')
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('groupomania', 'username', 'password', {
+host: 'localhost',
+dialect: 'mysql',
+logging: false,//passer a true pour voir les différentes requêtes effectuées par l'ORM
+});
+//on exporte pour utiliser notre connexion depuis les autre fichiers.
+var exports = module.exports = {};
+exports.sequelize = sequelize;
 
-/* création du schéma de données qui contient les caractéristiques pour chaque utilisateur
+//exemple de création d'un utilisateur, puis de sa suppression dans la foulée. Ce qui permet de voir comment effectuer des requêtes successives.
+    Model.User.create({
+        name: 'Test',
+        email : 'test@testmail.com'
+    }).then(user => {
+        return user.destroy();
+    }).then(destroy => {
+        //traitement terminé...
+    }).catch(function (e) {
+        //gestion erreur
+    });
+/**
+ * ROLE
+ */
+/*const Role = sequelize.define('role', {
+    id: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    name: {type: Sequelize.STRING(255), allowNull: false},
+},
+        {tableName: 'role', timestamps: false, underscored: true}//par default "tableName" serait "roles" (au pluriel), "timestamps" crée 2 champs automatique pour les dates de création et de modification (très pratique si nécessaire) et "underscored" permet de créer automatiquement des champs de "relation" entre les tables de type "role_id" plutôt que "UserId".
+);
+exports.Role = Role;*/
+
+
+const User = sequelize.define('user', {
+    id: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    name: {type: Sequelize.STRING(255), allowNull: false, },
+    email: {type: Sequelize.STRING(255), allowNull: false, unique: true},
+},
+        {tableName: 'users', timestamps: false, underscored: true}
+);
+exports.User = User;
+
+//création du schéma de données qui contient les caractéristiques pour chaque utilisateur
 const UserModels  {
     constructor(){}
     signup(sqlInserts){
@@ -20,8 +61,8 @@ const UserModels  {
 }
 console.log(UserModels);
 // exportation du modèle d'utilisateur
-
-module.exports = UserModels;*/
+UserModels();
+module.exports = UserModels;
 
 'use strict';
 module.exports = (sequelize, DataTypes) => {

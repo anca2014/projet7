@@ -17,18 +17,21 @@ const server = http.Server(app);
 const io = require('socket.io')(server);
 
 const Sequelize = require('sequelize');
-
+const sequelize = new Sequelize('groupomania', 'root', '', {
+   host: 'localhost',
+   dialect: 'mysql'
+});
 // récupération des fonctions du fichier sql.js
 const sql = require('./serveur/sql.js');
 
-const routes = require('./serveur/routes.js');
+/*const routes = require('./serveur/routes.js');
 const socket = require('./serveur/socket.js');
 
 
 routes.f(app, __dirname, mysql, sql);
 socket.f(io, mysql, sql);
 
-server.listen(8888);
+server.listen(8888);*/
 // ajout de headers pour toutes les requêtes afin d'autoriser n'importe quel utilisateur à accéder à l'application
 //résolution erreurs cors
 app.use((req, res, next) => {

@@ -4,21 +4,21 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mysql = require ('mysql');
-const models=require('../models');
+const user=require('../models/User');
 const utils=require('../utils/jwtUtils');
 const verifInput=require('../utils/verifInput');
   
 /*importation du modèle utilisateur*/
-//const User =require('../models/User');
+const User =require('../models/User');
 
 //Création d'un user
 exports.signup = (req, res) => {
     // Valider les paramètres de la requète
     let email = req.body.email;
-    let username = req.body.username;
+    let pseudo = req.body.pseudo;
     let password = req.body.password;
 
-    if (email == null || username == null || password == null) {
+    if (email == null || pseudo == null || password == null) {
         res.status(400).json({ error: 'il manque un paramètre' })
     }
 
@@ -27,9 +27,9 @@ exports.signup = (req, res) => {
     console.log(emailOk)
     let mdpOK = verifInput.validPassword(password);
     console.log(mdpOK)
-    let usernameOk = verifInput.validUsername(username);
-    console.log(usernameOk)
-    if (emailOk == true && mdpOK == true && usernameOk == true) {
+    let pseudoOk = verifInput.validUsername(pseudo);
+    console.log(pseudoOk)
+    if (emailOk == true && mdpOK == true && pseudoOk == true) {
         //Vérification si user n'existe pas déjà
         //TO DO => Vérifier l'username et l'email
         models.User.findOne({
@@ -61,7 +61,19 @@ exports.signup = (req, res) => {
         console.log('pas cette fois')
     }
 };
-
+/*exports.signup = function(mysql, sql, callback, blog) {
+  // teste si l'attribut log est true ou false
+  if (!blog) {
+    let requete_sql = 'SELECT * FROM clics ORDER BY id';
+  } else {
+    // nous demandons de choisir le premier élément dans
+    // l'ordre décroissant, c'est-à-dire le dernier élément
+    let requete_sql = 'SELECT * FROM clics ORDER BY id DESC LIMIT 0,1'
+  }
+  sql.requete(mysql, sql, requete_sql, function(results) {
+    callback(results);
+  });
+}*/
 // exportation de la fonction qui va connecter un utilisateur déjà enregistré
 exports.login = (req, res, next) =>{
  User.findOne({ email: req.body.email })

@@ -1,5 +1,5 @@
 //Import
-const models = require('../models');
+const user = require('../models/User');
 const utils = require('../utils/jwtUtils');
 const fs = require('fs');
 

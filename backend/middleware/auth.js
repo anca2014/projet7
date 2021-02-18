@@ -1,7 +1,7 @@
 // MIDDLEWARE DE VERIFICATION DES TOKENS ENVOYES AVEC LES REQUETES ET DE PROTECTION DES ROUTES
 
 const jwt = require('jsonwebtoken');
-const models = require('../models');
+const user = require('../models/User');
 
 // exportation de la fonction middleware qui va vérifier le token envoyé avant d'autoriser les requêtes
 module.exports = (req, res, next) =>{

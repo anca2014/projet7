@@ -1,4 +1,4 @@
-'use strict';
+//MODELE POST 
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define('Post', {
     content: DataTypes.STRING,

@@ -11,15 +11,14 @@
     let user={ 			
   			email:email.value,
   			password:motpasse.value,    
-};
-localStorage.setItem('user',JSON.stringify(user));
-  
-  /*lien vers la page inscription*/
+}; 
+/*lien vers la page inscription*/
    document.location.href="blog.html";
 console.log(login);
 /*promesse appel API*/
-ajax("http://localhost:3000/api/user/login","POST",(user)).then(response=>{
+ajax("http://localhost:3000/api/user/login","POST",(user))
+.then(response=>{
+  localStorage.setItem('token',response.token);
     console.log(user);
-    console.log(blog);
 });
 });

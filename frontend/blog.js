@@ -4,6 +4,6 @@ function newblog(){
 };
 
 /*promesse appel API*/
-ajax("http://localhost:3000/api/groupomania/auth").then(blog=>{
+ajax("http://localhost:3000/api/groupomania/auth/me",'GET').then(blog=>{
     newblog(blog)
 });

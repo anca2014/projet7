@@ -17,6 +17,8 @@ exports.signup = (req, res) => {
     let email = req.body.email;
     let pseudo = req.body.pseudo;
     let password = req.body.password;
+    let lastName = req.body.lastName;
+    let firstName = req.body.firstName
 
     if (email == null || pseudo == null || password == null) {
         res.status(400).json({ error: 'il manque un paramètre' })
@@ -27,12 +29,12 @@ exports.signup = (req, res) => {
     console.log(emailOk)
     let mdpOK = verifInput.validPassword(password);
     console.log(mdpOK)
-    let pseudoOk = verifInput.validUsername(pseudo);
+    let pseudoOk = verifInput.validPseudo(pseudo);
     console.log(pseudoOk)
     if (emailOk == true && mdpOK == true && pseudoOk == true) {
         //Vérification si user n'existe pas déjà
         //TO DO => Vérifier l'username et l'email
-        models.User.findOne({
+        User.findOne({
             attributes: ['email'],
             where: { email: email }
         })
@@ -40,9 +42,11 @@ exports.signup = (req, res) => {
                 if (!user) {
                     bcrypt.hash(password, 10, function (err, bcryptPassword) {
                         // Création de l'user
-                        const newUser = models.User.create({
+                        const newUser = User.create({
+                            lastName: lastName,
+                            firstName: firstName,
                             email: email,
-                            username: username,
+                            pseudo: pseudo,
                             password: bcryptPassword,
                             isAdmin: false
                         })
@@ -56,24 +60,11 @@ exports.signup = (req, res) => {
                     res.status(409).json({ error: 'Cette utilisateur existe déjà ' })
                 }
             })
-            //.catch(err => { res.status(500).json({ err }) })
+           .catch(err => { res.status(500).json({ err }) })
     } else {
         console.log('pas cette fois')
     }
 };
-/*exports.signup = function(mysql, sql, callback, blog) {
-  // teste si l'attribut log est true ou false
-  if (!blog) {
-    let requete_sql = 'SELECT * FROM clics ORDER BY id';
-  } else {
-    // nous demandons de choisir le premier élément dans
-    // l'ordre décroissant, c'est-à-dire le dernier élément
-    let requete_sql = 'SELECT * FROM clics ORDER BY id DESC LIMIT 0,1'
-  }
-  sql.requete(mysql, sql, requete_sql, function(results) {
-    callback(results);
-  });
-}*/
 // exportation de la fonction qui va connecter un utilisateur déjà enregistré
 exports.login = (req, res, next) =>{
  User.findOne({ email: req.body.email })

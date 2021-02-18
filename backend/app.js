@@ -22,7 +22,7 @@ const sequelize = new Sequelize('groupomania', 'root', '', {
    dialect: 'mysql'
 });
 // récupération des fonctions du fichier sql.js
-const sql = require('./serveur/sql.js');
+//const sql = require('./serveur/sql.js');
 
 /*const routes = require('./serveur/routes.js');
 const socket = require('./serveur/socket.js');

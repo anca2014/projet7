@@ -4,7 +4,7 @@
 /*recuperation de la balise html par ID*/
 
   			const nom=document.getElementById('lastName');
-  			const prenom=document.getElementById('name');
+  			const prenom=document.getElementById('firstname');
   			const mail=document.getElementById('email');
   			const mpasse=document.getElementById('password');
   			const pseud=document.getElementById('pseudo');
@@ -13,12 +13,12 @@
 
 signup.addEventListener('submit',function(event){
 	event.preventDefault();
-  
+
 /*enregistrement dans localstorage*/
     
    let user={
-   			lastName:prenom.value,
-  			nom :nom.value,
+   			lastName:nom.value,
+  			firstName :prenom.value,
   			email:mail.value,
   			password:mpasse.value,
   		  pseudo:pseud.value,
@@ -27,19 +27,10 @@ signup.addEventListener('submit',function(event){
 };
 localStorage.setItem('user',JSON.stringify(user));
   
-  /*lien vers la page inscription*/
-   //document.location.href="blog.html";
-/*
-socket.on('signup', function(results) {
-  // boucle pour parcourir l'array "results"
-  for(var i = 0; i < results.length; i++) {
-    byId('signup').innerHTML += results[i].signup + '<br>';
-  }
-});
 /*promesse appel API*/
 ajax("http://localhost:3000/api/user/signup","POST",(user)).then(response=>{
     console.log(user);
     console.log(response);
-    document.location.href="blog.html";
+    //document.location.href="blog.html";
 });
 });

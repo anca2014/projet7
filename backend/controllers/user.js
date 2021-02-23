@@ -9,7 +9,7 @@ const utils=require('../utils/jwtUtils');
 const verifInput=require('../utils/verifInput');
   
 /*importation du modèle utilisateur*/
-const User =require('../models/User');
+const User=require('../models/User');
 
 //Création d'un user
 exports.signup = (req, res) => {
@@ -62,35 +62,46 @@ exports.signup = (req, res) => {
             })
            .catch(err => { res.status(500).json({ err }) })
     } else {
-        console.log('pas cette fois')
+        //console.log('pas cette fois')
     }
 };
-// exportation de la fonction qui va connecter un utilisateur déjà enregistré
-exports.login = (req, res, next) =>{
- User.findOne({ email: req.body.email })
-    .then(user => {
-      if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-      }
-      bcrypt.compare(req.body.password, user.password)
-        .then(valid => {
-          if (!valid) {
-            return res.status(401).json({ error: 'Mot de passe incorrect !' });
-          }
-          res.status(200).json({
+exports.login = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { email: req.body.email, 
+               password : req.body.password
+      },
+    }); // on vérifie que l'adresse mail figure bien dan la bdd
+    if (user === null) {
+      return res.status(403).json({ error: "Connexion échouée" });
+    } else {
+      const hash = await bcrypt.compare(req.body.password, user.password); // on compare les mots de passes
+      if (!hash) {
+        return res.status(401).json({ error: "Mot de passe incorrect !" });
+      } else {
+        const jwtObject = await token.issueJWT(user);
+        res.status(200).json({
+          // on renvoie le user et le token
             userId: user._id,
             token: jwt.sign(
             { userId: user._id},
             'TOKEN',
             { expiresIn: '24H'}
             )      
-          });
-        })
-        .catch(error => res.status(500).json({ error }));
-    })
-    .catch(error => res.status(500).json({ error }));
+          /*user: user,
+          token: tokenObject.token,
+          sub: tokenObject.sub,
+          expires: tokenObject.expiresIn,
+          message: "Bonjour " + user.pseudo + " !",*/
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Erreur serveur" });
+  }
 };
-//Profil d'un user
+
+/*Profil d'un user
 exports.userProfil = (req, res) => {
     let id = utils.getUserId(req.headers.authorization)
     models.User.findOne({
@@ -101,14 +112,14 @@ exports.userProfil = (req, res) => {
         .catch(error => res.status(500).json(error))
 };
 
-//modification d'un profil
+modification d'un profil
 exports.changePwd = (req, res) => {
-    //TO DO:
-    //Récupère l'id de l'user et le nouveau password
+    TO DO:
+    Récupère l'id de l'user et le nouveau password
     let userId = utils.getUserId(req.headers.authorization);
     const newPassword = req.body.newPassword;
     console.log(newPassword)
-    //Vérification regex du nouveau mot de passe
+    Vérification regex du nouveau mot de passe
     console.log('admin', verifInput.validPassword(newPassword))
     if (verifInput.validPassword(newPassword)) {
         //Vérifie qu'il est différent de l'ancien
@@ -174,4 +185,4 @@ exports.deleteProfile = (req, res) => {
     } else {
         res.status(500).json({ error: 'Impossible de supprimer ce compte, contacter un administrateur' })
     }
-}
+}*/

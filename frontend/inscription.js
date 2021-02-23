@@ -26,11 +26,12 @@ signup.addEventListener('submit',function(event){
   		  ville:lieu.value
 };
 localStorage.setItem('user',JSON.stringify(user));
-  
+ 
 /*promesse appel API*/
 ajax("http://localhost:3000/api/user/signup","POST",(user)).then(response=>{
     console.log(user);
     console.log(response);
-    //document.location.href="blog.html";
-});
-});
+    document.location.href="connexion.html";
+    });
+
+ });

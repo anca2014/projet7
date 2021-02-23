@@ -6,7 +6,7 @@ const path= require('path');
 const express=require('express');
 const bodyParser=require('body-parser');
 
-const userRoutes = require('./routes/user.js');
+const userRoutes=require('./routes/user.js');
 const postRoutes = require('./routes/post.js');
 
 // récupération du module node-mysql

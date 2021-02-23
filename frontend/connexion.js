@@ -13,7 +13,7 @@
   			password:motpasse.value,    
 }; 
 /*lien vers la page inscription*/
-   document.location.href="blog.html";
+   //document.location.href="blog.html";
 console.log(login);
 /*promesse appel API*/
 ajax("http://localhost:3000/api/user/login","POST",(user))

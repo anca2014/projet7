@@ -29,8 +29,8 @@
 
                
 
-                <form [formGroup]="loginForm" *ngIf="!loading">
-                    <div id="login">
+                <form [formGroup]="loginForm"  id="login">
+                   
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" formControlName="email">
@@ -41,8 +41,8 @@
                        <input type="password" class="form-control" id="password" formControlName="password">
                     </div>
 
-                    <div class="connexion"><button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="onLogin()"><a href="blog.html">Connecté</a></button></a></div>
-                </div>
+                    <div class="connexion"><button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="onLogin()">Connecté</button></div>
+               
                     
                 </form>
 

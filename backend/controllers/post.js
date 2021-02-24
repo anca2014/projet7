@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     let attachmentURL
     //identifier qui créé le message
     let id = utils.getUserId(req.headers.authorization)
-    models.User.findOne({
+    User.findOne({
         attributes: ['id', 'email', 'username'],
         where: { id: id }
     })

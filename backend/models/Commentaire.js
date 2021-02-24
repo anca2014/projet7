@@ -12,7 +12,6 @@ const Commentaire= sequelize.define('commentaire',{
     date_heure: {type:Sequelize.DATE, allowNull:false},
     comContent:{type:Sequelize.TEXT, allowNulle: false},
     photo:{ type: Sequelize.STRING(255, allowNull:true)},
-    IsAdmin :Sequelize.BOOLEAN
 },
         {tableName :'commentaires',timestamps : false, undescored : true}
 );

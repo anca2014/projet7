@@ -66,10 +66,9 @@ exports.signup = (req, res) => {
     }
 };
 exports.login = async (req, res) => {
-  try {
+  //try {
     const user = await User.findOne({
-      where: { email: req.body.email, 
-               password : req.body.password
+      where: { email: req.body.email
       },
     }); // on vérifie que l'adresse mail figure bien dan la bdd
     if (user === null) {
@@ -79,7 +78,6 @@ exports.login = async (req, res) => {
       if (!hash) {
         return res.status(401).json({ error: "Mot de passe incorrect !" });
       } else {
-        const jwtObject = await token.issueJWT(user);
         res.status(200).json({
           // on renvoie le user et le token
             userId: user._id,
@@ -88,42 +86,36 @@ exports.login = async (req, res) => {
             'TOKEN',
             { expiresIn: '24H'}
             )      
-          /*user: user,
-          token: tokenObject.token,
-          sub: tokenObject.sub,
-          expires: tokenObject.expiresIn,
-          message: "Bonjour " + user.pseudo + " !",*/
         });
       }
     }
-  } catch (error) {
-    return res.status(500).json({ error: "Erreur serveur" });
-  }
+ // } catch (error) {
+ //   return res.status(500).json({ error: "Erreur serveur" });
+ // }
 };
 
 /*Profil d'un user
 exports.userProfil = (req, res) => {
     let id = utils.getUserId(req.headers.authorization)
-    models.User.findOne({
-        attributes: ['id', 'email', 'username','isAdmin'],
+    User.findOne({
+        attributes: ['id', 'email', 'pseudo','isAdmin'],
         where: { id: id }
     })
         .then(user => res.status(200).json(user))
         .catch(error => res.status(500).json(error))
 };
 
-modification d'un profil
+//modification d'un profil
 exports.changePwd = (req, res) => {
-    TO DO:
-    Récupère l'id de l'user et le nouveau password
+    //TO DO: Récupère l'id de l'user et le nouveau password
     let userId = utils.getUserId(req.headers.authorization);
     const newPassword = req.body.newPassword;
     console.log(newPassword)
-    Vérification regex du nouveau mot de passe
+    //Vérification regex du nouveau mot de passe
     console.log('admin', verifInput.validPassword(newPassword))
     if (verifInput.validPassword(newPassword)) {
         //Vérifie qu'il est différent de l'ancien
-        models.User.findOne({
+        User.findOne({
             where: { id: userId }
         })
             .then(user => {
@@ -134,7 +126,7 @@ exports.changePwd = (req, res) => {
                         res.status(406).json({ error: 'Vous avez entré le même mot de passe' })
                     } else {
                         bcrypt.hash(newPassword, 10, function (err, bcryptNewPassword) {
-                            models.User.update(
+                            User.update(
                                 { password: bcryptNewPassword },
                                 { where: { id: user.id } }
                             )
@@ -156,7 +148,7 @@ exports.deleteProfile = (req, res) => {
     let userId = utils.getUserId(req.headers.authorization);
     if (userId != null) {
         //Recherche sécurité si user existe bien
-        models.User.findOne({
+        User.findOne({
             where: { id: userId }
         })
             .then(user => {
@@ -169,7 +161,7 @@ exports.deleteProfile = (req, res) => {
                         .then(() => {
                             console.log('Tous les posts de cet user ont été supprimé');
                             //Suppression de l'utilisateur
-                            models.User
+                            User
                                 .destroy({
                                     where: { id: user.id }
                                 })

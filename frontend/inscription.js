@@ -14,7 +14,7 @@
 signup.addEventListener('submit',function(event){
 	event.preventDefault();
 
-/*enregistrement dans localstorage*/
+/*creation user recuperation données*/
     
    let user={
    			lastName:nom.value,
@@ -25,6 +25,7 @@ signup.addEventListener('submit',function(event){
   		  poste: travail.value,
   		  ville:lieu.value
 };
+/*enregistrement dans localstorage*/
 localStorage.setItem('user',JSON.stringify(user));
  
 /*promesse appel API*/

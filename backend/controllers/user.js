@@ -43,23 +43,24 @@ exports.signup = (req, res) => {
                     bcrypt.hash(password, 10, function (err, bcryptPassword) {
                         // Création de l'user
                         const newUser = User.create({
+
                             lastName: lastName,
                             firstName: firstName,
                             email: email,
                             pseudo: pseudo,
                             password: bcryptPassword,
-                            isAdmin: false
+                            IsAdmin: false
                         })
-                            .then(newUser => { res.status(201).json({ 'id': newUser.id }) })
-                            .catch(err => {
-                                res.status(500).json({ err })
-                            })
-                    })
-                }
-                else {
+                          .then(newUser => { res.status(201).json({ 'id': newUser.id }) })
+                         // .catch(err => {
+                          //	res.status(500).json({ err })
+                          	 })
+               // })
+               }
+                 else {
                     res.status(409).json({ error: 'Cette utilisateur existe déjà ' })
                 }
-            })
+            })	
            .catch(err => { res.status(500).json({ err }) })
     } else {
         //console.log('pas cette fois')
@@ -89,10 +90,7 @@ exports.login = async (req, res) => {
         });
       }
     }
- // } catch (error) {
- //   return res.status(500).json({ error: "Erreur serveur" });
- // }
-};
+  };
 
 /*Profil d'un user
 exports.userProfil = (req, res) => {

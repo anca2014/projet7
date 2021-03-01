@@ -1,11 +1,11 @@
 //Import
-const user = require('../models/User');
+const post = require('../models/Post');
 const utils = require('../utils/jwtUtils');
 const fs = require('fs');
 
 
 //Création d'un message
-exports.create = (req, res) => {
+/*exports.create = (req, res) => {
     //Declaration de l'url de l'image
     let attachmentURL
     //identifier qui créé le message
@@ -45,7 +45,28 @@ exports.create = (req, res) => {
         })
         .catch(error => res.status(500).json(error));
 }
+*/
+exports.create=(req,res) =>{
+    let title=req.body.title;
+    let photo=req.body.photo;
+    let content=req.body.content;
+    if(title==null|| content==null){
+        res.status(400).json({error})
+    }
+    post.findOne({
+        attributes:['content'],
+        where:{content:content}
+    })
+    .then(post=>{
+        const newpost = post.create({
+            title:title,
+            photo:photo,
+            content:content
+        })
+        .then(newpost=>{res.status(201).json({'id':newpost.id})})
+  })
 
+}
 //Afficher les posts sur le mur
 exports.listMsg = (req, res) => {
     models.Post.findAll({

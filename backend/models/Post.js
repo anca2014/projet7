@@ -11,8 +11,8 @@ const sequelize = new Sequelize('groupomania', 'root', '', {
     date_heure: {type:Sequelize.DATE, allowNull:false},
     title:{type:Sequelize.STRING(50), allowNulle: false},
     content:{type:Sequelize.TEXT, allowNulle: false},
-    photo:{ type: Sequelize.STRING(255, allowNull:true)},
+    //photo:{ type: Sequelize.STRING(255, allowNull:true)},
 },
         {tableName :'posts',timestamps : false, undescored : true}
 );
-module.exports = Posts;
+module.exports = Post;

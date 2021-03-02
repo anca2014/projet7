@@ -21,12 +21,13 @@
             	</div>
 */
       
-	/*	const title =document.getElementById('title');
+		const title =document.getElementById('title');
         const date_heure=document.getElementById('date_heure');
         const photo =document.getElementById('photo');
         const content=document.getElementById('content');
+        const cree=document.getElementById('cree');
 
-      post.addEventListener('submit',function(event){
+      post.addEventListener('click',function(event){
 	event.preventDefault();  
 
 		let post={
@@ -34,7 +35,7 @@
 				photo: photo.value,
 				content: content.value
 
-		};*/
+		};
 
 /*enregistrement dans localstorage*/
 localStorage.setItem('post',JSON.stringify(post));
@@ -42,5 +43,12 @@ localStorage.setItem('post',JSON.stringify(post));
     /*promesse appel API*/
 ajax("http://localhost:3000/api/post/create","POST",(post)).then(response=>{
     console.log(post);
+    console.log(response);  
+    });
+});
+      const listMsg=document.getElementById('listMsg');
+      
+ajax("http://localhost:3000/api/post/","GET",(post)).then(response=>{
+    console.log(listMsg);
     console.log(response);  
     });

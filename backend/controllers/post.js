@@ -1,9 +1,52 @@
 //Import
-const post = require('../models/Post');
+const Post = require('../models/Post');
 const utils = require('../utils/jwtUtils');
 const fs = require('fs');
+const postCtrl = require('../controllers/post');
+const User = require('../models/User');
 
-
+/*exports.create = (req, res) => {
+    //Declaration de l'url de l'image
+    let attachmentURL
+    //identifier qui créé le message
+    let id = utils.getUserId(req.headers.authorization)
+    User.findOne({
+        attributes: ['id', 'email'],
+        where: { id: id }
+    })
+        .then(user => {
+            if (user !== null) {
+                //Récupération du corps du post
+                let content = req.body.content;
+                if (req.file != undefined) {
+                    attachmentURL = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+                }
+                else {
+                    attachmentURL == null
+                };
+                if ((content == 'null' && attachmentURL == null)) {
+                    res.status(400).json({ error: 'Rien à publier' })
+                } else {
+                    Post.create({
+                        content: content,
+                        attachement: attachmentURL,
+                        title:title,
+                        UserId: user.id
+                    })
+                        .then((newPost) => {
+                            res.status(201).json(newPost)
+                        })
+                        .catch((err) => {
+                            res.status(500).json(err)
+                        })
+                };
+            } else {
+                res.status(400).json(error);
+            }
+        })
+        .catch(error => res.status(500).json(error));
+}*/
+//Création d'un post
 exports.create=(req,res) =>{
     let title=req.body.title;
     let photo=req.body.photo;
@@ -24,13 +67,13 @@ exports.create=(req,res) =>{
         .then(newpost=>{res.status(201).json({'id':newpost.id})})
   })
 
-}
+};
 //Afficher les posts sur le mur
 exports.listMsg = (req, res) => {
     post.findAll({
         include: [{
-            model: models.User,
-            attributes: ['username']
+            model: User,
+            attributes: ['pseudo']
         }],
         order: [['createdAt', 'DESC']]
     })

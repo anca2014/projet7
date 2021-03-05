@@ -19,14 +19,13 @@ const user = localStorage.getItem('user');
 				title: title.value,
 				content: content.value,
                 photo: photo.value,
-                userId: user._id,
 		};
 
 /*enregistrement dans localstorage*/
 localStorage.setItem('post',JSON.stringify(post));
 
     /*promesse appel API*/
-ajax("http://localhost:3000/api/post/create","POST",(post),(user)).then(response=>{
+ajax("http://localhost:3000/api/post/create","POST",(post)).then(response=>{
     console.log(post);
     console.log(response)
     post={
@@ -41,7 +40,7 @@ ajax("http://localhost:3000/api/post/create","POST",(post),(user)).then(response
   console.log(post);
       const listMsg=document.getElementById('listMsg');
 
-ajax("http://localhost:3000/api/post/","GET",(post),(user)).then(response=>{
+ajax("http://localhost:3000/api/post/","GET").then(response=>{
     console.log(listMsg);
     console.log(response);  
     });

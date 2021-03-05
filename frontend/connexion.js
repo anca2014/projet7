@@ -21,8 +21,8 @@ ajax("http://localhost:3000/api/user/login","POST",(user)).then(response=>{
         email:email.value,
         token:response.token,    
 };  
-    localStorage.setItem('user',JSON.stringify(user));
-    console.log(localStorage.getItem('user'));
+    localStorage.setItem('email',email.value);
+    localStorage.setItem('token',response.token);
     document.location.href="blog.html";
   });
 });

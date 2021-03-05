@@ -11,6 +11,7 @@ ajax=(url,method='GET',data={})=>{
         };
   request.open(method,url);
   request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Bearer"+localStorage.getItem('token'));
   request.send(JSON.stringify(data));
   });
 }; 

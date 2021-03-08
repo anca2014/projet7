@@ -81,10 +81,10 @@ exports.login = async (req, res) => {
       } else {
         res.status(200).json({
           // on renvoie le user et le token
-            userId: user._id,
+            userId: user.id,
             token: jwt.sign(
-            { userId: user._id},
-            'TOKEN',
+            { userId: user.id},
+            'dddfffggghhh',
             { expiresIn: '24H'}
             )      
         });

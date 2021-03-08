@@ -2,50 +2,9 @@
 const Post = require('../models/Post');
 const utils = require('../utils/jwtUtils');
 const fs = require('fs');
-const postCtrl = require('../controllers/post');
 const User = require('../models/User');
 
-/*exports.create = (req, res) => {
-    //Declaration de l'url de l'image
-    let attachmentURL
-    //identifier qui créé le message
-    let id = utils.getUserId(req.headers.authorization)
-    User.findOne({
-        attributes: ['id', 'email'],
-        where: { id: id }
-    })
-        .then(user => {
-            if (user !== null) {
-                //Récupération du corps du post
-                let content = req.body.content;
-                if (req.file != undefined) {
-                    attachmentURL = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-                }
-                else {
-                    attachmentURL == null
-                };
-                if ((content == 'null' && attachmentURL == null)) {
-                    res.status(400).json({ error: 'Rien à publier' })
-                } else {
-                    Post.create({
-                        content: content,
-                        attachement: attachmentURL,
-                        title:title,
-                        UserId: user.id
-                    })
-                        .then((newPost) => {
-                            res.status(201).json(newPost)
-                        })
-                        .catch((err) => {
-                            res.status(500).json(err)
-                        })
-                };
-            } else {
-                res.status(400).json(error);
-            }
-        })
-        .catch(error => res.status(500).json(error));
-}*/
+
 //Création d'un post
 exports.create=(req,res) =>{
     let title=req.body.title;
@@ -54,28 +13,30 @@ exports.create=(req,res) =>{
     if(title==null|| content==null){
         res.status(400).json({error})
     }
-    post.findOne({
+    Post.findOne({
         attributes:['content'],
         where:{content:content}
     })
     .then(post=>{
-        const newpost = post.create({
+        const newPost = Post.create({
             title:title,
             photo:photo,
-            content:content
+            content:content,
+            date_heure:new Date(),
+            userId:req.userId
         })
-        .then(newpost=>{res.status(201).json({'id':newpost.id})})
+        .then(newPost=>{res.status(201).json({'id':newPost.id})})
   })
 
 };
 //Afficher les posts sur le mur
 exports.listMsg = (req, res) => {
-    post.findAll({
-        include: [{
+    Post.findAll({
+       /* include: [{
             model: User,
             attributes: ['pseudo']
-        }],
-        order: [['createdAt', 'DESC']]
+        }],*/
+        order: [['date_heure', 'DESC']]
     })
         .then(posts => {
             if (posts.length > null) {
@@ -84,7 +45,7 @@ exports.listMsg = (req, res) => {
                 res.status(404).json({ error: 'Pas de post à afficher' })
             }
         })
-        .catch(err => res.status(500).json(err))
+       // .catch(err => res.status(500).json(err))
 }
 
 //Suppression d'un post

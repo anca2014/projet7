@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta name="descrition" content="Réseau social entreprise.">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="index,follow"/>
+
+        <title>Groupomania</title >
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="blog.css">       
+    </head >
+    <div class="container-fluid">
+        <div class="row">
+            <header>
+                <div class="banniere"><img src="icon-above-font.png" alt="logo Groupomania"></div>
+                <h1>Réseau social interne Groupomania</h1>
+            </header>
+        </div>
+    </div>
+
+    <body >
+        <section>
+            <div >
+                <nav class="col navbar navbar-expand navbar-dark">                           
+                    <a class="nav-link" href="index.html">Accueil</a>
+                                                         
+                    <a class="nav-link" href="index.html">Deconnexion</a>
+                </nav>
+             </div>    
+        </section>
+
+        <section class="message" >
+                <div id="post" class="post">
+                    <h3>Déposer un post</h3>
+                        <div class="info">
+                                   
+                            <div class="form-group">
+                                <label for="title">Titre</label>
+                                <input type="title" class="form-control" id="title" formControlName="title">
+                            </div>                                               
+                                <h4 id="date_heure"></h4>
+                        </div>
+                                <h5 id="pseudo"></h5>
+                        <div class="contenu">
+                            <div class="form-group">
+                                 <label for="photo">Photo</label>
+                                 <input type="photo" class="form-control" id="photo" formControlName="photo">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Commentaire</label>
+                                <input type="content" class="form-control" id="content" formControlName="content">
+                            </div>
+                            <p id="content"></p >
+                        </div>
+                        <div class="cree"><button id="cree">Crée</button></div>
+                </div>  
+        </section>
+
+         <section class="actu" id="blog">
+            <div class="fil">
+                    <h2> Fil d'actualité</h2>           
+                    <div class="actu">             
+                        <section class="actu">
+                            <div id="listMsg">                           
+                            </div>    
+                        </section>
+                    </div>               
+            </div>                                         
+        </section>
+
+        <footer>Condition Légale</footer>
+
+        <script src="ajax.js"></script>
+        <script src="blog.js"></script>
+    </body>
+        
+</html>

@@ -63,7 +63,6 @@ function newresponse(elts){
         const span= document.createElement("span");
         const label= document.createElement("label");
         const button=document.createElement("button");
-       // button.addEventListener('onclick',function)
        
         const id= document.createElement("input");
         const comContent= document.createElement("input");
@@ -88,8 +87,9 @@ elts[i].commentaires.forEach(commentaire =>{
         heure.textContent=commentaire.date_heure,      
         comm.textContent= commentaire.comContent,
         photo.textContent=commentaire.photo,
-        id.texteContent=commentaire.Id,
-        postId= elts[i].id;          
+        id.texteContent=commentaire.id,
+
+        postId= elts[i].id       
     });
        /*______________________________________________________________
         rajout des classes(css)*/
@@ -109,7 +109,7 @@ elts[i].commentaires.forEach(commentaire =>{
         img.src=elts[i].photo ? elts[i].photo : 'icon-above-font.png';
         //contenu html
         button.textContent="Poster";
-        label.textContent="Commentaire";
+        label.textContent="Ecrire un commentaire";
     
         /*________________________________________________________________
         Mise en place du bloc html*/

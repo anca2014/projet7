@@ -2,6 +2,7 @@
 //MODELE UTILISATEUR
 const{ Sequelize, DataTypes}= require('sequelize');
 const Post= require('./Post.js');
+const Commentaire= require('./Commentaire.js');
 const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
    host: 'sql11.freemysqlhosting.net',
    dialect: 'mysql'
@@ -23,6 +24,12 @@ User.hasMany(Post,{
  foreingKey:'userId'
 })
 Post.belongsTo(User,{
+ foreingKey:'userId'
+})
+User.hasMany(Commentaire,{
+ foreingKey:'userId'
+})
+Commentaire.belongsTo(User,{
  foreingKey:'userId'
 })
 module.exports = User;

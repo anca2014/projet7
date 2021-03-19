@@ -3,6 +3,7 @@ const Post = require('../models/Post');
 const utils = require('../utils/jwtUtils');
 const fs = require('fs');
 const User = require('../models/User');
+const Commentaire = require('../models/Commentaire');
 
 
 //Création d'un post
@@ -32,7 +33,7 @@ exports.create=(req,res) =>{
 //Afficher les posts sur le mur
 exports.listMsg = (req, res) => {
     Post.findAll({
-       include: [User],
+       include: [User,{model:Commentaire,include:[User]}],
         order: [['date_heure', 'DESC']]
     })
         .then(posts => {
@@ -51,7 +52,7 @@ exports.delete = (req, res) => {
     let userOrder = req.body.userIdOrder;
     //identification du demandeur
     let id = utils.getUserId(req.headers.authorization)
-    models.User.findOne({
+    User.findOne({
         attributes: ['id', 'email', 'username', 'isAdmin'],
         where: { id: id }
     })
@@ -59,7 +60,7 @@ exports.delete = (req, res) => {
             //Vérification que le demandeur est soit l'admin soit le poster (vérif aussi sur le front)
             if (user && (user.isAdmin == true || user.id == userOrder)) {
                 console.log('Suppression du post id :', req.body.postId);
-                models.Post
+                Post
                     .findOne({
                         where: { id: req.body.postId }
                     })
@@ -78,7 +79,7 @@ exports.delete = (req, res) => {
                             })
                         }
                         else {
-                            models.Post
+                            Post
                                 .destroy({
                                     where: { id: postFind.id }
                                 })
@@ -106,7 +107,7 @@ exports.update = (req, res) => {
             //Vérification que le demandeur est soit l'admin soit le poster (vérif aussi sur le front)
             if (user && (user.isAdmin == true || user.id == userOrder)) {
                 console.log('Modif ok pour le post :', req.body.postId);
-                models.Post
+                Post
                     .update(
                         {
                             content: req.body.newText,

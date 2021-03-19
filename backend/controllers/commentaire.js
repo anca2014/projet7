@@ -12,11 +12,11 @@ exports.create=(req,res) =>{
     if(comContent==null){
        res.status(400).json({error})
     }
-    Com.findOne({
+   /* Com.findOne({
         attributes:['comContent'],
         where:{comContent:comContent, postId:req.body.postId}
     })
-    .then(com=>{
+    .then(com=>{*/
         const newCom = Com.create({
            
             photo:photo,
@@ -26,5 +26,5 @@ exports.create=(req,res) =>{
             userId:req.userId
         })
         .then(newCom=>{res.status(201).json({'id':newCom.id})})
-  })
+ // })
 };

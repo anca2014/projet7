@@ -52,14 +52,9 @@ function newresponse(elts){
         const img= document.createElement("img");
         const h5= document.createElement("h5");
 
-        // affichage des commentaaire
-        const message=document.createElement("div");
-        const heure=document.createElement("time");
-        const comm =document.createElement("p");
-        const photo=document.createElement("img");
-
+        
        //creation balise pour creation du commentaire
-        //const commentaire=document.getElementById('commentaire')
+        const commentaire=document.getElementById('commentaire')
         const span= document.createElement("span");
         const label= document.createElement("label");
         const button=document.createElement("button");
@@ -83,22 +78,35 @@ ajax("http://localhost:3000/api/commentaire/create","POST",(commentaire)).then(c
     });
 }); 
 elts[i].commentaires.forEach(commentaire =>{
-        //console.log(commentaire)
+        // affichage des commentaire
+        const message=document.createElement("div");
+        const heure=document.createElement("time");
+        const comm =document.createElement("p");
+        const photo=document.createElement("img");
+
+        message.appendChild(comm);
+        message.appendChild(heure);
+        message.appendChild(photo);
+
+        message.classList.add("list")
+
+        article.appendChild(message);
+
+      
         heure.textContent=commentaire.date_heure,      
-        comm.textContent= commentaire.comContent,
+        comm.textContent=commentaire.comContent,
         photo.textContent=commentaire.photo,
         id.texteContent=commentaire.id,
-
-        postId= elts[i].id       
+        postId= elts[i].id   
+           
     });
        /*______________________________________________________________
-        rajout des classes(css)*/
+      /*  rajout des classes(css)*/
         comContent.classList.add("form-control");
         id.classList.add("form-control");
         button.classList.add("cart-button");
         img.classList.add("image");
         div.classList.add("actu");
-        message.classList.add("list")
         /*_______________________________________________________________
         Contenu html*/
         //contenu du post
@@ -125,13 +133,9 @@ elts[i].commentaires.forEach(commentaire =>{
         form.appendChild(comContent);
         form.appendChild(button);
     
-        message.appendChild(comm);
-        message.appendChild(heure);
-        message.appendChild(photo);
-
         article.appendChild(div);
         article.appendChild(span);
-        article.appendChild(message);
+        
 
         listMsg.appendChild(article);
   };

@@ -5,7 +5,6 @@ const fs = require('fs');
 const User = require('../models/User');
 const Commentaire = require('../models/Commentaire');
 
-
 //Création d'un post
 exports.create=(req,res) =>{
     let title=req.body.title;
@@ -28,7 +27,6 @@ exports.create=(req,res) =>{
         })
         .then(newPost=>{res.status(201).json({'id':newPost.id})})
   })
-
 };
 //Afficher les posts sur le mur
 exports.listMsg = (req, res) => {
@@ -45,54 +43,34 @@ exports.listMsg = (req, res) => {
         })
         .catch(err => res.status(500).json(err))
 }
-
 //Suppression d'un post
 exports.delete = (req, res) => {
-    //req => userId, postId, user.isAdmin
-    let userOrder = req.body.userIdOrder;
     //identification du demandeur
-    let id = utils.getUserId(req.headers.authorization)
     User.findOne({
-        attributes: ['id', 'email', 'username', 'isAdmin'],
-        where: { id: id }
+        where: {id:req.userId}
     })
         .then(user => {
-            //Vérification que le demandeur est soit l'admin soit le poster (vérif aussi sur le front)
-            if (user && (user.isAdmin == true || user.id == userOrder)) {
-                console.log('Suppression du post id :', req.body.postId);
+            //Vérification que le demandeur est le poster (vérif aussi sur le front)
                 Post
                     .findOne({
-                        where: { id: req.body.postId }
+                        where: { id: req.params.id}
                     })
                     .then((postFind) => {
-
-                        if (postFind.attachement) {
-                            const filename = postFind.attachement.split('/images/')[1];
-                            console.log("teseeeest", filename);
-                            fs.unlink(`images/${filename}`, () => {
-                                models.Post
-                                    .destroy({
-                                        where: { id: postFind.id }
-                                    })
-                                    .then(() => res.end())
-                                    .catch(err => res.status(500).json(err))
-                            })
-                        }
-                        else {
+                            if(user.isAdmin||user.id===postFind.userId){
                             Post
                                 .destroy({
                                     where: { id: postFind.id }
                                 })
                                 .then(() => res.end())
-                                .catch(err => res.status(500).json(err))
-                        }
+                                 } else { res.status(403).json('Utilisateur non autorisé à supprimer ce post') }
+                             //   .catch(err => res.status(500).json(err))
+                      //  }
                     })
-                    .catch(err => res.status(500).json(err))
-            } else { res.status(403).json('Utilisateur non autorisé à supprimer ce post') }
+                  //  .catch(err => res.status(500).json(err))
         })
-        .catch(error => res.status(500).json(error));
+   //     .catch(error => res.status(500).json(error));
 };
-
+//route de modification préparer mais pas encore fonctionnelle
 //Modification d'un post
 exports.update = (req, res) => {
     //récupération de l'id du demandeur pour vérification

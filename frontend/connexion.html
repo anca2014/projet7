@@ -28,28 +28,29 @@
 
                
 
-                <form [formGroup]="loginForm"  id="login">
+                <form  id="login">
                    
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" formControlName="email">
+                        <input type="email" class="form-control" id="email" >
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                       <input type="password" class="form-control" id="password" formControlName="password">
+                       <input type="password" class="form-control" id="password" >
                     </div>
 
-                    <div class="connexion"><button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="onLogin()">Connecté</button></div>
+                    <div class="connexion"><button >Connecté</button></div>
                
                     
                 </form>
 
             </section>
-
+</div>
             <footer>Condition Légale</footer>
 
         <script src="ajax.js"></script>
         <script src="connexion.js"></script>
+        
     </body >
 </html>

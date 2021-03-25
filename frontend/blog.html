@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="blog.css">       
     </head >
+    <body >
     <div class="container-fluid">
         <div class="row">
             <header>
@@ -20,7 +21,7 @@
         </div>
     </div>
 
-    <body >
+    
         <section>
             <div >
                 <nav class="col navbar navbar-expand navbar-dark">                           
@@ -38,7 +39,7 @@
                                    
                             <div class="form-group">
                                 <label for="title">Titre</label>
-                                <input type="title" class="form-control" id="title" formControlName="title">
+                                <input type="text" class="form-control" id="title">
                             </div>                                               
                                 <h4 id="date_heure"></h4>
                         </div>
@@ -46,14 +47,14 @@
                         <div class="contenu">
                             <div class="form-group">
                                  <label for="photo">Photo</label>
-                                 <input type="photo" class="form-control" id="photo" formControlName="photo">
+                                 <input type="photo" class="form-control" id="photo">
                             </div>
                             <div class="form-group">
                                 <label for="content">Commentaire</label>
-                                <input type="content" class="form-control" id="content" formControlName="content">
+                                <textarea  class="form-control" id="content"></textarea>
                                 
                             </div>
-                            <p id="content"></p >
+                            
                         </div>
                         <div class="cree"><button id="cree">Crée</button></div>
                 </div>  
@@ -63,7 +64,7 @@
             <div class="fil">
                     <h2> Fil d'actualité</h2>                                                            
                     <div id="listMsg">
-                        
+                       
                     </div>                                                    
             </div>                                         
         </section>

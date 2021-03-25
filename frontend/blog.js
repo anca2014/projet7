@@ -33,8 +33,9 @@ ajax("http://localhost:3000/api/post/create","POST",(post)).then(response=>{
         title: title.value,
         photo: photo.value,
         content: content.value,
-        pseudo: pseudo.value
+        pseudo: pseudo.value 
           }   
+       window.location.href ='blog.html';   
     });
 });
 //_________________________________________________________________________________________ 
@@ -53,19 +54,29 @@ function newresponse(elts){
         const img= document.createElement("img");
         const h5= document.createElement("h5");
 
-        
+        //supression d'un post***************************************************************
+        const supp=document.createElement("button");
+        supp.addEventListener('click',function(event){
+        event.preventDefault();  
+
+        ajax("http://localhost:3000/api/post/"+elts[i].id,"DELETE").then(suppresion=>{
+        window.location.href ='blog.html'; 
+            });
+        });
+       //*************************************************************************************
        //creation balise pour creation du commentaire;
-        const image=document.createElement('img');
+       const span= document.createElement("span");
+        const id= document.createElement("input");
         const photo=document.createElement('input');
-        const span= document.createElement("span");
+        const comContent= document.createElement("textarea");
+
+        const image=document.createElement('img');
         const label= document.createElement("label");
         const button=document.createElement("button");
        
-        const id= document.createElement("input");
-        const comContent= document.createElement("input");
         let newText=document.createTextNode('Commentaire') 
         label.appendChild(newText);  
-        //creation evenement pour envoi du commentaire 
+        //creation evenement pour envoi du commentaire*********************************************** 
         const form=document.createElement("form");
         form.addEventListener('submit',function(event){
         event.preventDefault();  
@@ -78,8 +89,9 @@ function newresponse(elts){
 //promesse appel API pour afficher un commmentaire
 ajax("http://localhost:3000/api/commentaire/create","POST",(commentaire)).then(commentaire=>{
     });
+:window.location.href ='blog.html';
 }); 
-        //affichage des commentaire au post**************************
+        //affichage des commentaire au post************************************************************
 elts[i].commentaires.forEach(commentaire =>{
         // affichage des commentaire
         const message=document.createElement("div");
@@ -87,14 +99,17 @@ elts[i].commentaires.forEach(commentaire =>{
         const comm =document.createElement("p");
         const photo=document.createElement("img");
         const pseudo=document.createElement("h6");
+        const suppre=document.createElement("button");
 
         message.appendChild(comm);
         message.appendChild(heure);
         message.appendChild(photo);
         message.appendChild(pseudo);
+        message.appendChild(suppre);
 
         message.classList.add("list")
         photo.classList.add("image");
+        suppre.classList.add("cart-button");
 
         article.appendChild(message);
 
@@ -104,20 +119,31 @@ elts[i].commentaires.forEach(commentaire =>{
         photo.src=commentaire.photo,
         pseudo.textContent=commentaire.user.pseudo,
         id.texteContent=commentaire.id,
-        postId= elts[i].id   
-           
+        postId= elts[i].id
+        suppre.textContent="Supprimer";  
+
+        //supression d'un commentaire 
+        suppre.addEventListener('click',function(event){
+        event.preventDefault();  
+
+        ajax("http://localhost:3000/api/post/"+elts[i].id,"DELETE").then(suppresion=>{
+        window.location.href ='blog.html'; 
+            });
+        });          
     });
-//fin d'affichage des commentaires au post*************************
+//fin d'affichage des commentaires au post******************************************************
        /*______________________________________________________________
       /*  rajout des classes(css)*/
-        photo.classList.add("photo","form-control");
+        photo.classList.add("file","form-control");
         image.classList.add("image");
 
-        comContent.classList.add("form-control");
+        comContent.classList.add("content","form-control");
         id.classList.add("form-control");
         button.classList.add("cart-button");
         img.classList.add("image");
         div.classList.add("actu");
+        supp.classList.add("cart-button");
+        
         
         /*_______________________________________________________________
         Contenu html*/
@@ -127,12 +153,12 @@ elts[i].commentaires.forEach(commentaire =>{
         p.textContent=elts[i].content;
         h5.textContent=elts[i].user.pseudo;
         img.src=elts[i].photo ? elts[i].photo : 'icon-above-font.png';
-       // image.src=elts[i].photo;
+
         //contenu html
         button.textContent="Poster";
         label.textContent="Ecrire un commentaire";
-        photo.src=elts[i].photo;
-    
+        photo.src=elts[i].photo;;
+        supp.textContent="Supprimer";   
         /*________________________________________________________________
         Mise en place du bloc html*/
         div.appendChild(h3);
@@ -140,6 +166,7 @@ elts[i].commentaires.forEach(commentaire =>{
         div.appendChild(h5);
         div.appendChild(p);
         div.appendChild(img);
+        div.appendChild(supp);
         
         span.appendChild(label);
         span.appendChild(form);
@@ -150,19 +177,13 @@ elts[i].commentaires.forEach(commentaire =>{
         form.appendChild(button);
         form.appendChild(photo);
 
-    
         article.appendChild(div);
         article.appendChild(span);
         
-
         listMsg.appendChild(article);
   };
 };
-
-//appel get de tous les post piblier
+//appel get de tous les post publier*************************************
 ajax("http://localhost:3000/api/post/","GET").then(response=>{
     newresponse(response);  
-    console.log(listMsg);
-    console.log(response); 
     });
-

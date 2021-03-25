@@ -88,8 +88,8 @@ function newresponse(elts){
         };
 //promesse appel API pour afficher un commmentaire
 ajax("http://localhost:3000/api/commentaire/create","POST",(commentaire)).then(commentaire=>{
+    window.location.href ='blog.html';
     });
-:window.location.href ='blog.html';
 }); 
         //affichage des commentaire au post************************************************************
 elts[i].commentaires.forEach(commentaire =>{

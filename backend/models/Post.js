@@ -2,6 +2,7 @@
 const{ Sequelize, DataTypes}= require('sequelize');
 const User=require('./User.js');
 const Commentaire=require ('./Commentaire.js');
+const db = require('./db.js');
 const sequelize = new Sequelize('sql11396409','sql11396409', 'JVtyC2y7Dp',{
    host: 'sql11.freemysqlhosting.net',
    dialect: 'mysql'

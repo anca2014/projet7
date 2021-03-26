@@ -1,13 +1,12 @@
-
 //MODELE UTILISATEUR
 const{ Sequelize, DataTypes}= require('sequelize');
 const Post= require('./Post.js');
 const Commentaire= require('./Commentaire.js');
+const db = require('./db.js');
 const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
    host: 'sql11.freemysqlhosting.net',
    dialect: 'mysql'
 });
-
  const User= sequelize.define('user',{
     id:{type:Sequelize.INTEGER, autoIncrement: true, primaryKey:true },
 	  pseudo: {type:Sequelize.STRING(30),allowNull :false},
@@ -20,9 +19,6 @@ const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
 },
         {tableName :'users',timestamps : false, undescored : true}
 );
-User.hasMany(Post,{
- foreingKey:'userId'
-})
 Post.belongsTo(User,{
  foreingKey:'userId'
 })

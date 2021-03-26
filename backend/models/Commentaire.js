@@ -1,6 +1,8 @@
 //MODELE COMMENTAIRE
 const{ Sequelize, DataTypes}= require('sequelize');
 const User=require('./User.js');
+const Post= require('./Post.js');
+const db = require('./db.js');
 const sequelize = new Sequelize('sql11396409','sql11396409', 'JVtyC2y7Dp',{
    host: 'sql11.freemysqlhosting.net',
    dialect: 'mysql'
@@ -16,4 +18,9 @@ const Commentaire= sequelize.define('commentaire',{
 },
         {tableName :'commentaires',timestamps : false, undescored : true}
 );
+
+/*Commentaire.belongsTo(Post,{
+ foreingKey:'postId'
+})*/
+
 module.exports = Commentaire;

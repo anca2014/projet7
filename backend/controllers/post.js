@@ -62,7 +62,7 @@ exports.delete = (req, res) => {
                                     where: { id: postFind.id }
                                 })
                                 .then(() => res.end())
-                                 } else { res.status(403).json('Utilisateur non autorisé à supprimer ce post') }
+                                 } //else { res.status(403).json('Utilisateur non autorisé à supprimer ce post') }
                              //   .catch(err => res.status(500).json(err))
                       //  }
                     })

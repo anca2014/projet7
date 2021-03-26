@@ -28,15 +28,15 @@ exports.delete = (req, res) => {
         where: {id:req.userId}
     })
         .then(user => {
-            //Vérification que le demandeur est soit le poster (vérif aussi sur le front)
+            //Vérification que le demandeur est soit le commentaire (vérif aussi sur le front)
                 Com
-                    .findOne({
+                .findOne({
                         where: { id: req.params.id}
                     })
                     .then((comFind) => {
-                            if(user.isAdmin||user.id===userFind.userId){
+                            if(user.isAdmin||user.id===comFind.userId){
                             Com
-                                .destroy({
+                            .destroy({
                                     where: { id: comFind.id }
                                 })
                                 .then(() => res.end())

@@ -5,36 +5,24 @@ const http = require('http');
 const path= require('path');
 const express=require('express');
 const bodyParser=require('body-parser');
-const db = require('./models/db.js');
-
+//const db = require('./models/db.js');
 const userRoutes=require('./routes/user.js');
 const postRoutes = require('./routes/post.js');
 const comRoutes = require('./routes/commentaire.js')
-const dotenv =require('dotenv');
-require('dotenv').config();
-console.log(dotenv)
-// récupération du module node-mysql
-const mysql = require('mysql');
-//création de l'application express
+//require('dotenv').config();
+
 const app=express();
-const server = http.Server(app);
-const io = require('socket.io')(server);
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
+   host:'sql11.freemysqlhosting.net',
+   dialect: 'mysql'
+});
 
 
-/*const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
-   host: 'sql11.freemysqlhosting.net',
+/*const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASS, {
+   host:process.env.DB_HOST ,
    dialect: 'mysql'
 });*/
-const Sequelize = require('sequelize');
-/*const sequelize= new Sequelize;
- sequelize.createConnexion({
- serveur:process.env.DB_SERVEUR ,
- host:process.env.DB_HOST ,
- username:process.env.DB_USER ,
- password:process.env.DB_PASS,
- dialect:'mysql'
-  });*/
-
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');/*d'accéder à notre API depuis n'importe quelle origine ( '*' ) ;*/
@@ -57,8 +45,4 @@ app.use('/api/post',postRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/commentaire', comRoutes);
 
-// établissement de la connexion
-io.on('connection', (socket) =>{
-   console.log(`Connecté au client ${socket.id}`)
-})
 module.exports = app;

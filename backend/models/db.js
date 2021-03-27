@@ -3,18 +3,32 @@ const mysql = require('mysql');
 
 require('dotenv').config()
 
-// Création de la connexion
-const db = mysql.createConnection({
-    serveur     : process.env.DB_SERVEUR,
-    user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : 'sql11396409'
-});
+const db = mysql.createConnection(
+{
+	database:process.env.DB_DATABASE, 
+	user:process.env.DB_USER, 
+	pass:process.env.DB_PASS,
+	
+	host: process.env.DB_HOST,
+    dialect: 'mysql'
+    })
+
+
+
+/*const db= mysql.createConnection (
+{
+	database:process.env.DB_DATABASE, 
+	user:process.env.DB_USER, 
+	pass:process.env.DB_PASS, 
+	
+   host: process.env.DB_HOST,
+   dialect: 'mysql'
+})*/
 
 // Connection 
 db.connect((err) => {
     if(err){
-       // throw err;
+        throw err;
     }
     console.log('MySQL est connecté :)');
 });

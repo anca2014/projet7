@@ -2,11 +2,19 @@
 const{ Sequelize, DataTypes}= require('sequelize');
 const User=require('./User.js');
 const Post= require('./Post.js');
-const db = require('./db.js');
-const sequelize = new Sequelize('sql11396409','sql11396409', 'JVtyC2y7Dp',{
-   host: 'sql11.freemysqlhosting.net',
+//const db = require('./db.js');
+
+//require('dotenv').config();
+
+const sequelize = new Sequelize('sql11396409', 'sql11396409', 'JVtyC2y7Dp', {
+   host:'sql11.freemysqlhosting.net',
    dialect: 'mysql'
 });
+/*const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASS, {
+   host: process.env.DB_HOST,
+   dialect: 'mysql'
+});
+*/
 
 const Commentaire= sequelize.define('commentaire',{
     id:{type:Sequelize.INTEGER, autoIncrement: true, primaryKey:true },

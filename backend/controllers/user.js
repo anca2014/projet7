@@ -9,7 +9,7 @@ const utils=require('../utils/jwtUtils');
 const verifInput=require('../utils/verifInput');
   
 /*importation du modèle utilisateur*/
-const User=require('../models/User');
+const User= require('../models/User');
 
 //Création d'un user
 exports.signup = (req, res) => {
@@ -68,7 +68,7 @@ exports.signup = (req, res) => {
 };
 exports.login = async (req, res) => {
   //try {
-      user = await User.findOne({
+      user= await  User.findOne({
       where: { email: req.body.email
       },
     }); // on vérifie que l'adresse mail figure bien dan la bdd
@@ -91,6 +91,7 @@ exports.login = async (req, res) => {
       }
     }
   };
+
 
 /*Profil d'un user
 exports.userProfil = (req, res) => {
